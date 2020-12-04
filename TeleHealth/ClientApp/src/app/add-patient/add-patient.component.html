@@ -1,0 +1,32 @@
+<h1 id="tableLabel">Add Patient</h1>
+
+<p>Use the form below to add a new patient.</p>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <div class="form-row">
+    <div class="form-group col-md-12" *ngIf="hasErrors">
+      <label for="firstname">All fields below are required</label>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="firstname">Firstname</label>
+      <input type="text" class="form-control" id="firstname" placeholder="Patients firstname" formControlName="Firstname">
+      <small *ngIf="hasError('Firstname','required')">Required</small>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="lastname">Lastname</label>
+      <input type="text" class="form-control" id="lastname" placeholder="Patients lastname" formControlName="Lastname">
+      <small *ngIf="hasError('Lastname','required')">Required</small>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="gender">Gender</label>
+      <select id="gender" class="form-control" formControlName="Gender">
+        <option selected value="">Choose...</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <small *ngIf="hasError('Gender','required')">Required</small>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
