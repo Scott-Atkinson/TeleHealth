@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TeleHealth.Core.Patients;
@@ -20,15 +21,34 @@ namespace TeleHealth.Controllers
         [HttpGet]
         public async Task<IEnumerable<PatientVm>> Get()
         {
-            return await _patientService.GetPatients();
+            try
+            {
+                return await _patientService.GetPatients();
+            }
+            catch (Exception exception)
+            {
+                // Either log / send the exception to support 
+                return await Task.FromResult<IEnumerable<PatientVm>>(null);
+            }
+
+            
         }
 
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(bool))]
         public async Task<IActionResult> SavePatient([FromBody] PatientDetail model)
         {
-            await _patientService.AddPatient(model);
-            return Ok();
+            try
+            {
+                await _patientService.AddPatient(model);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                // Either log / send the exception to support 
+                return BadRequest();
+            }
+            
         }
     }
 }
